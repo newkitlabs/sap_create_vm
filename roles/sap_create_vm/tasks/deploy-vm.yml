@@ -1,0 +1,18 @@
+---
+- name: Gather Facts
+  ansible.builtin.gather_facts:
+
+- name: Create Temp Dir
+  tempfile:
+    state: directory
+    suffix: dude
+  register: tmpdir
+
+- debug: var=inventory_hostname
+- name: print hostname
+  command: hostname
+- name: print os-release
+  command: cat /etc/os-release
+- include_tasks: dude/user-tests.yml
+#- include_tasks: "{{ dude_startpoint }}"
+

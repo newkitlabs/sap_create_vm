@@ -1,0 +1,12 @@
+---
+- hosts: all
+  gather_facts: true
+  serial: 1
+  vars:
+  tasks:
+    - debug: var=vm_ssh_key
+
+    - name: Include Role
+      ansible.builtin.include_role:
+        name: sap_create_vm
+

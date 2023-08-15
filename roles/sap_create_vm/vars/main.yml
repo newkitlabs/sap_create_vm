@@ -1,0 +1,25 @@
+---
+# vars file for sap_create_vm
+
+sap_create_vm_namespace: sap
+sap_create_vm_storage_class: nas
+
+sap_create_vm_memory: 32
+
+sap_create_vm_cores: 26
+sap_create_vm_threads: 2
+sap_create_vm_sockets: 4
+
+sap_create_vm_rhel_image: 
+
+sap_create_vm_memory_overhead: 16
+
+
+sap_create_vm_ssh_key:
+
+sap_create_vm_ipv4_address_w_prefix: 192.168.1.100/24
+sap_create_vm_ipv4_gateway: 192.168.1.254
+sap_create_vm_ipv4_dns: 192.168.1.254
+
+sap_create_vm_cloud_user_password: xxxx
+
