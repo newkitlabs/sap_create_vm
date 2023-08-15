@@ -21,5 +21,6 @@ sap_create_vm_ipv4_address_w_prefix: 192.168.1.100/24
 sap_create_vm_ipv4_gateway: 192.168.1.254
 sap_create_vm_ipv4_dns: 192.168.1.254
 
-sap_create_vm_cloud_user_password: xxxx
+sap_create_vm_cloud_user_passwd: xxxx
+sap_create_vm_template: vm-configuration.yaml.j2
 

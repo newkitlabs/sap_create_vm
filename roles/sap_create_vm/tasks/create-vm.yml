@@ -1,27 +1,25 @@
 ---
-- name: "Create namespace {{ vm_namespace }}"
+- name: "Create namespace {{ sap_create_vm_namespace }}"
   kubernetes.core.k8s:
-    name: "{{ vm_namespace }}"
+    name: "{{ sap_create_vm_namespace }}"
     api_version: v1
     kind: Namespace
     state: present
-    kubeconfig: /home/nkoenig/data/git/cnv-dude/playbooks/kubeconfig.geetika
 
 - name: Delete VMs using Kubernetes module
   kubernetes.core.k8s:
-    kubeconfig: /home/nkoenig/data/git/cnv-dude/playbooks/kubeconfig.geetika
-    name: "{{ vm_namespace }}"
+    name: "{{ sap_create_vm_namespace }}"
     template:
-      path: "{{ vm_template }}"
+      path: "{{ sap_create_vm_template }}"
     state: absent
-  loop: "{{ vm_names }}"
+  loop: "{{ sap_create_vm_names }}"
 
 - name: Create VMs using Kubernetes module
   kubernetes.core.k8s:
     kubeconfig: /home/nkoenig/data/git/cnv-dude/playbooks/kubeconfig.geetika
-    name: "{{ vm_namespace }}"
+    name: "{{ sap_create_vm_namespace }}"
     template:
-      path:  "{{ vm_template }}" 
+      path:  "{{ sap_create_vm_template }}" 
     state: present
-  loop: "{{ vm_names }}"
+  loop: "{{ sap_create_vm_names }}"
 
