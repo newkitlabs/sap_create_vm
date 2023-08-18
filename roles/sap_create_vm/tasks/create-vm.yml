@@ -13,10 +13,10 @@
       path: "{{ sap_create_vm_template }}"
     state: absent
   loop: "{{ sap_create_vm_names }}"
+  when: sap_create_vm_delete_vms == true
 
 - name: Create VMs using Kubernetes module
   kubernetes.core.k8s:
-    kubeconfig: /home/nkoenig/data/git/cnv-dude/playbooks/kubeconfig.geetika
     name: "{{ sap_create_vm_namespace }}"
     template:
       path:  "{{ sap_create_vm_template }}" 

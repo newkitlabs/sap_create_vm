@@ -89,9 +89,9 @@ spec:
             pageSize: 1Gi
 
         cpu:
-          cores: "{{ sap_create_vm_cores }}"
-          threads: "{{ sap_create_vm_threads }}"
-          sockets: "{{ sap_create_vm_sockets }}"
+          cores: {{ sap_create_vm_cores|int }}
+          threads: {{ sap_create_vm_threads|int }}
+          sockets: {{ sap_create_vm_sockets|int }}
           dedicatedCpuPlacement: true
           features:
           - name: x2apic

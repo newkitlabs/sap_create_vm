@@ -1,2 +1,4 @@
 ---
-vm_template: vm-configuration.yaml.j2
+sap_create_vm_template: vm-configuration.yaml.j2
+
+sap_create_vm_delete_vms: false
