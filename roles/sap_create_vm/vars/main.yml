@@ -10,7 +10,9 @@ sap_create_vm_cores: 26
 sap_create_vm_threads: 2
 sap_create_vm_sockets: 4
 
-sap_create_vm_rhel_image: 
+sap_create_vm_download_rhel_images: true
+sap_create_vm_rhel_image: rhel-86
+
 
 sap_create_vm_memory_overhead: 16
 

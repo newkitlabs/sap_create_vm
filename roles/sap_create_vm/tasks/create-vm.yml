@@ -6,6 +6,10 @@
     kind: Namespace
     state: present
 
+- name: Include download-rhel-images.yml
+  ansible.builtin.include_tasks: download-rhel-images.yml
+  when: sap_create_vm_download_rhel_images
+
 - name: Delete VMs using Kubernetes module
   kubernetes.core.k8s:
     name: "{{ sap_create_vm_namespace }}"
