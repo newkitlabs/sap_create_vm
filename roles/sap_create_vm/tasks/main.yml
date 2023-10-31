@@ -1,4 +1,3 @@
 ---
-- include_tasks: prepare.yml
 - name: Include create VM
-  include_tasks: create-vm.yml
+  ansible.builtin.include_tasks: create-vm.yml

@@ -1,38 +1,86 @@
-Role Name
-=========
+`EXPERIMENTAL`
 
-A brief description of the role goes here.
+# sap_create_vm
 
-Requirements
-------------
+Use this role to create a virtual machine on an Red Hat OpenShift Virtualization (OCPv) platform. 
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Requirements
 
-Role Variables
---------------
+An OCPv cluster that has been configured with the sap_hypervisor_node_preconfigure role.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+## Role Variables
+```
+# Namespace the VMs are created in
+sap_create_vm_namespace: sap
 
-Dependencies
-------------
+# Storage classe used XXX TBR?
+sap_create_vm_storage_class: nas
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+# Amount of memory [GB] the VM will have
+sap_create_vm_memory: 32 # [GB]
 
-Example Playbook
-----------------
+# Number of CPU cores the VM will have
+sap_create_vm_cores: 26
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+# Number of CPU threads
+sap_create_vm_threads: 2
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+# Number of CPU sockets to use
+sap_create_vm_sockets: 4
 
-License
--------
+# Should the RHEL OS image be downloaded from Red Hat
+sap_create_vm_download_rhel_images: true
 
-BSD
+# Name of the disk image to be used as root disk 
+sap_create_vm_rhel_image: rhel-86
 
-Author Information
-------------------
+# This amount of memory [GB] is reserved on top of the VM memory for the container to give it some headroom, only change with caution.
+sap_create_vm_memory_overhead: 16 # [GB]
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+# Template to be used, should not be changed unless you know what you are doing
+sap_create_vm_template: vm-configuration.yaml.j2
+
+sap_create_vm_cloud_init: 
+      - cloudInitNoCloud:
+          userData: |
+            #cloud-config
+            user: cloud-user
+            password: mySup3RS3cureP@assw0rD
+            chpasswd:
+              expire: false
+            ssh_authorized_keys:
+              - "<PUT SSH KEY HERE> or remove"
+            hostname: "{{ item }}"
+          network:
+            version: 2
+            ethernets:
+              eth0:
+                dhcp4: true
+        name: cloudinitdisk
+
+
+## Dependencies
+
+Needs the ansible kubernetes module and the python3 kubernetes binding. On a RHEL based system the are named
+* python3-kubernetes
+* ansible-collection-kubernetes-core
+
+## Example Playbook
+
+playbooks/sap-create-vm.yml
+---
+- hosts: all
+  gather_facts: true
+  serial: 1
+  vars:
+  tasks:
+    - name: Include Role
+      ansible.builtin.include_role:
+        name: sap_create_vm
+```
+
+## License
+Apache 2.0
+
+## Author Information
+Nils Koenig (nkoenig@redhat.com)

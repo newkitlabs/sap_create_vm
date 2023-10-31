@@ -17,7 +17,7 @@
       path: "{{ sap_create_vm_template }}"
     state: absent
   loop: "{{ sap_create_vm_names }}"
-  when: sap_create_vm_delete_vms == true
+  when: sap_create_vm_delete_vms
 
 - name: Create VMs using Kubernetes module
   kubernetes.core.k8s:
@@ -26,4 +26,3 @@
       path:  "{{ sap_create_vm_template }}" 
     state: present
   loop: "{{ sap_create_vm_names }}"
-

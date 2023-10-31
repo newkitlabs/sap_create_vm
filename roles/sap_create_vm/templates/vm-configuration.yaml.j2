@@ -4,11 +4,8 @@ metadata:
   labels:
     app: "{{ item }}"
     flavor.template.kubevirt.io/large: "true"
-    os.template.kubevirt.io/rhel8.5: "true"
     vm.kubevirt.io/template: rhel8-server-large
     vm.kubevirt.io/template.namespace: openshift
-    vm.kubevirt.io/template.revision: "1"
-    vm.kubevirt.io/template.version: v0.19.4
     workload.template.kubevirt.io/server: "true"
   name: "{{ item }}"
   namespace: "{{ sap_create_vm_namespace }}"
@@ -24,7 +21,7 @@ spec:
         - ReadWriteMany
         resources:
           requests:
-            storage: "{{ sap_create_vm_memory|int * 2 }}Gi"
+            storage: "{{ sap_create_vm_memory|int * 3 }}Gi"
         storageClassName: "{{ sap_create_vm_storage_class }}"
   - metadata:
       name: "{{ item }}-hana-log-disk"
@@ -36,7 +33,7 @@ spec:
         - ReadWriteMany
         resources:
           requests:
-            storage: 500Gi
+            storage: "{{ sap_create_vm_memory|int * 3 }}Gi"
         storageClassName: "{{ sap_create_vm_storage_class }}"
   - metadata:
       name: "{{ item }}-hana-share-disk"
@@ -48,7 +45,7 @@ spec:
         - ReadWriteMany
         resources:
           requests:
-            storage: 100Gi
+            storage: 50Gi
         storageClassName: "{{ sap_create_vm_storage_class }}"
   - metadata:
       name: "{{ item }}-rootdisk"
@@ -75,10 +72,8 @@ spec:
         flavor.template.kubevirt.io/large: "true"
         kubevirt.io/domain: "{{ item }}"
         kubevirt.io/size: large
-        os.template.kubevirt.io/rhel8.5: "true"
         vm.kubevirt.io/name: "{{ item }}"
         workload.template.kubevirt.io/server: "true"
-#        workload.template.kubevirt.io/saphana: "true"
 
     spec:
       domain:
@@ -160,30 +155,23 @@ spec:
         name: multi-network-definition
       terminationGracePeriodSeconds: 180
       volumes:
-      - cloudInitNoCloud:
-          userData: |
-            #cloud-config
-            user: cloud-user
-            password: "{{ sap_create_vm_cloud_user_passwd }}"
-            chpasswd:
-              expire: false
-            ssh_authorized_keys:
-              - "{{ sap_create_vm_ssh_key }}"
-            hostname: "{{ item }}"
-            bootcmd:
-              - touch /tmp/bootcmd_run
-            packages:
-             - vim
-             - net-tools
-             - tmux
-             - python3
-            runcmd:
-              - [ nmcli, con, mod, "System eth0", ipv4.addresses, "{{ sap_create_vm_ipv4_address_w_prefix }}" ]
-              - [ nmcli, con, mod, "System eth0", ipv4.gateway, "{{ sap_create_vm_ipv4_gateway }}" ]
-              - [ nmcli, con, mod, "System eth0", ipv4.dns, "{{ sap_create_vm_ipv4_dns }}" ]
-              - [ nmcli, con, mod, "System eth0", ipv4.method, manual ]
-              - [ nmcli, con, up, "System eth0" ]
-        name: cloudinitdisk
+      {{sap_create_vm_cloud_init}}
+#      - cloudInitNoCloud:
+#          userData: |
+#            #cloud-config
+#            user: cloud-user
+#            password: "{{ sap_create_vm_cloud_user_passwd }}"
+#            chpasswd:
+#              expire: false
+#            ssh_authorized_keys:
+#              - "{{ sap_create_vm_ssh_key }}"
+#            hostname: "{{ item }}"
+#          network:
+#            version: 2
+#            ethernets:
+#              eth0:
+#                dhcp4: true
+#        name: cloudinitdisk
       - dataVolume:
           name: "{{ item }}-rootdisk"
         name: rootdisk

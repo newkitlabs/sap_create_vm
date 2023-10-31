@@ -1,28 +1,51 @@
 ---
 # vars file for sap_create_vm
 
+# Namespace the VMs are created in
 sap_create_vm_namespace: sap
+
+# Storage classe used XXX TBR?
 sap_create_vm_storage_class: nas
 
-sap_create_vm_memory: 32
+# Amount of memory [GB] the VM will have
+sap_create_vm_memory: 32 # [GB]
 
+# Number of CPU cores the VM will have
 sap_create_vm_cores: 26
+
+# Number of CPU threads
 sap_create_vm_threads: 2
+
+# Number of CPU sockets to use
 sap_create_vm_sockets: 4
 
+# Should the RHEL OS image be downloaded from Red Hat
 sap_create_vm_download_rhel_images: true
+
+# Name of the disk image to be used as root disk 
 sap_create_vm_rhel_image: rhel-86
 
+# This amount of memory [GB] is reserved on top of the VM memory for the container to give it some headroom, only change with caution.
+sap_create_vm_memory_overhead: 16 # [GB]
 
-sap_create_vm_memory_overhead: 16
-
-
-sap_create_vm_ssh_key:
-
-sap_create_vm_ipv4_address_w_prefix: 192.168.1.100/24
-sap_create_vm_ipv4_gateway: 192.168.1.254
-sap_create_vm_ipv4_dns: 192.168.1.254
-
-sap_create_vm_cloud_user_passwd: xxxx
+# Template to be used, should not be changed unless you know what you are doing
 sap_create_vm_template: vm-configuration.yaml.j2
+
+sap_create_vm_cloud_init: 
+      - cloudInitNoCloud:
+          userData: |
+            #cloud-config
+            user: cloud-user
+            password: "{{ sap_create_vm_cloud_user_passwd }}"
+            chpasswd:
+              expire: false
+            ssh_authorized_keys:
+              - "{{ sap_create_vm_ssh_key }}"
+            hostname: "{{ item }}"
+          network:
+            version: 2
+            ethernets:
+              eth0:
+                dhcp4: true
+        name: cloudinitdisk
 
