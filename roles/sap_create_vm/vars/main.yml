@@ -28,9 +28,6 @@ sap_create_vm_rhel_image: rhel-86
 # This amount of memory [GB] is reserved on top of the VM memory for the container to give it some headroom, only change with caution.
 sap_create_vm_memory_overhead: 16 # [GB]
 
-# Template to be used, should not be changed unless you know what you are doing
-sap_create_vm_template: vm-configuration.yaml.j2
-
 sap_create_vm_cloud_init: 
       - cloudInitNoCloud:
           userData: |

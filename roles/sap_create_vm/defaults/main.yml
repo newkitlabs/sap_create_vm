@@ -1,4 +1,6 @@
 ---
+# Template to be used, should not be changed unless you know what you are doing
 sap_create_vm_template: vm-configuration.yaml.j2
 
+# Should the VM be deleted before creating it
 sap_create_vm_delete_vms: false
