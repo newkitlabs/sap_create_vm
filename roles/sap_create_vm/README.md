@@ -2,7 +2,7 @@
 
 # sap_create_vm
 
-Use this role to create a virtual machine on an Red Hat OpenShift Virtualization (OCPv) platform. 
+Use this role to create a virtual machine ready for SAP workloads (e.g. HANA, Netweaver) on an Red Hat OpenShift Virtualization (OCPv) platform. Note that there is no official support statement from SAP regarding this VMs.
 
 ## Requirements
 

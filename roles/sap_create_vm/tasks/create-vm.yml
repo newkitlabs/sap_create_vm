@@ -23,6 +23,6 @@
   kubernetes.core.k8s:
     name: "{{ sap_create_vm_namespace }}"
     template:
-      path:  "{{ sap_create_vm_template }}" 
+      path: "{{ sap_create_vm_template }}"
     state: present
   loop: "{{ sap_create_vm_names }}"

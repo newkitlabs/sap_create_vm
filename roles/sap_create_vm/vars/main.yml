@@ -22,27 +22,26 @@ sap_create_vm_sockets: 4
 # Should the RHEL OS image be downloaded from Red Hat
 sap_create_vm_download_rhel_images: true
 
-# Name of the disk image to be used as root disk 
+# Name of the disk image to be used as root disk
 sap_create_vm_rhel_image: rhel-86
 
 # This amount of memory [GB] is reserved on top of the VM memory for the container to give it some headroom, only change with caution.
 sap_create_vm_memory_overhead: 16 # [GB]
 
-sap_create_vm_cloud_init: 
-      - cloudInitNoCloud:
-          userData: |
-            #cloud-config
-            user: cloud-user
-            password: "{{ sap_create_vm_cloud_user_passwd }}"
-            chpasswd:
-              expire: false
-            ssh_authorized_keys:
-              - "{{ sap_create_vm_ssh_key }}"
-            hostname: "{{ item }}"
-          network:
-            version: 2
-            ethernets:
-              eth0:
-                dhcp4: true
-        name: cloudinitdisk
-
+sap_create_vm_cloud_init:
+  - cloudInitNoCloud:
+      userData: |
+        #cloud-config
+        user: cloud-user
+        password: "{{ sap_create_vm_cloud_user_passwd }}"
+        chpasswd:
+          expire: false
+        ssh_authorized_keys:
+          - "{{ sap_create_vm_ssh_key }}"
+        hostname: "{{ item }}"
+      network:
+        version: 2
+        ethernets:
+          eth0:
+            dhcp4: true
+    name: cloudinitdisk
