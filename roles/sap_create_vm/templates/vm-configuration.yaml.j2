@@ -20,7 +20,6 @@ spec:
         resources:
           requests:
             storage: "{{ sap_create_vm_memory|int * 3 }}Gi"
-        storageClassName: "{{ sap_create_vm_storage_class }}"
   - metadata:
       name: "{{ item }}-hana-log-disk"
     spec:
@@ -30,7 +29,6 @@ spec:
         resources:
           requests:
             storage: "{{ sap_create_vm_memory|int * 3 }}Gi"
-        storageClassName: "{{ sap_create_vm_storage_class }}"
   - metadata:
       name: "{{ item }}-hana-share-disk"
     spec:
@@ -40,7 +38,6 @@ spec:
         resources:
           requests:
             storage: 50Gi
-        storageClassName: "{{ sap_create_vm_storage_class }}"
   - metadata:
       name: "{{ item }}-rootdisk"
     spec:
@@ -52,7 +49,6 @@ spec:
         resources:
           requests:
             storage: 50Gi
-        storageClassName: "{{ sap_create_vm_storage_class }}"
   running: true
   template:
     metadata:

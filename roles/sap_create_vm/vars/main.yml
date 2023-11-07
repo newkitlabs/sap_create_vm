@@ -4,20 +4,17 @@
 # Namespace the VMs are created in
 sap_create_vm_namespace: sap
 
-# Storage classe used XXX TBR?
-sap_create_vm_storage_class: nas
-
 # Amount of memory [GB] the VM will have
 sap_create_vm_memory: 32 # [GB]
 
 # Number of CPU cores the VM will have
-sap_create_vm_cores: 26
+sap_create_vm_cores: 2
 
 # Number of CPU threads
 sap_create_vm_threads: 2
 
 # Number of CPU sockets to use
-sap_create_vm_sockets: 4
+sap_create_vm_sockets: 1
 
 # Should the RHEL OS image be downloaded from Red Hat
 sap_create_vm_download_rhel_images: true
