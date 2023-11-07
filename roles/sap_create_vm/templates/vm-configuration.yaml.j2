@@ -17,8 +17,6 @@ spec:
       source:
         blank: {}
       storage:
-        accessModes:
-        - ReadWriteMany
         resources:
           requests:
             storage: "{{ sap_create_vm_memory|int * 3 }}Gi"
@@ -29,8 +27,6 @@ spec:
       source:
         blank: {}
       storage:
-        accessModes:
-        - ReadWriteMany
         resources:
           requests:
             storage: "{{ sap_create_vm_memory|int * 3 }}Gi"
@@ -41,8 +37,6 @@ spec:
       source:
         blank: {}
       storage:
-        accessModes:
-        - ReadWriteMany
         resources:
           requests:
             storage: 50Gi
@@ -55,8 +49,6 @@ spec:
           name: "{{ sap_create_vm_rhel_image }}"
           namespace: openshift-virtualization-os-images
       storage:
-        accessModes:
-        - ReadWriteMany
         resources:
           requests:
             storage: 50Gi
