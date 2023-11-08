@@ -45,18 +45,18 @@ sap_create_vm_cloud_config:
         chpasswd:
           expire: false
 
-      network:
-        version: 2
-        ethernets:
-          eth0:
-            dhcp4: true
+        network:
+          version: 2
+          ethernets:
+            eth0:
+              dhcp4: true
 
 
 # Networks the VM is attached to, see below for an example
 # The OCPv cluster has to have the according NetworkAttachmentDefinitions and NetworkPolicies
 sap_create_vm_networks: []
 
-#sap_create_vm_networks:
+# sap_create_vm_networks:
 #  - multus:
 #      networkName: sapbridge-network-definition
 #    name: sapbridge-network-definition
@@ -71,7 +71,7 @@ sap_create_vm_networks: []
 # The OCPv cluster has to have the according NetworkAttachmentDefinitions and NetworkPolicies
 sap_create_vm_interfaces: []
 
-#sap_create_vm_interfaces:
+# sap_create_vm_interfaces:
 #  - name: sapbridge-network-definition
 #    bridge: {}
 #    model: virtio
