@@ -28,7 +28,7 @@ spec:
       storage:
         resources:
           requests:
-            storage: "{{ sap_create_vm_memory|int * 3 }}Gi"
+            storage: "{{ sap_create_vm_memory|int * 1 }}Gi"
   - metadata:
       name: "{{ item }}-hana-share-disk"
     spec:
