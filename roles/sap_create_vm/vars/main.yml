@@ -35,12 +35,16 @@ sap_create_vm_rhel_version: 8.8.0
 sap_create_vm_memory_overhead: 16 # [GB]
 
 sap_create_vm_cloud_config:
-      userData: |
+      userData: >+
         #cloud-config
+
         user: cloud-user
-        password: "{{ sap_create_vm_cloud_user_passwd }}"
+
+        password: {{ sap_create_vm_cloud_user_passwd }}
+
         chpasswd:
           expire: false
+
       network:
         version: 2
         ethernets:

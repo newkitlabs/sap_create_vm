@@ -123,7 +123,7 @@ spec:
       terminationGracePeriodSeconds: 180
       volumes:
       - cloudInitNoCloud:
-          {{ sap_create_vm_cloud_config }}
+          {{ sap_create_vm_cloud_config | to_json }}
         name: cloudinitdisk
       - dataVolume:
           name: "{{ item }}-rootdisk"
