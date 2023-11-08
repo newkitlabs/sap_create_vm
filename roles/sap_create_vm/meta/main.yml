@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+  role_name: sap_create_vm
+  namespace: community
   author: Nils Koenig
   description: Use this role to create a virtual machine ready for SAP workloads (e.g. HANA, Netweaver) on an Red Hat OpenShift Virtualization (OCPv) platform. Note that there is no official support statement from SAP regarding this VM.
   company: Red Hat
