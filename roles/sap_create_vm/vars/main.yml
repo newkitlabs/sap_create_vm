@@ -49,7 +49,7 @@ sap_create_vm_cloud_config:
 
 
 # Networks the VM is attached to, see below for an example
-# The OCPv cluster has to have the according NetworkAttachmentPolicies
+# The OCPv cluster has to have the according NetworkAttachmentDefinitions and NetworkPolicies
 sap_create_vm_networks: []
 
 #sap_create_vm_networks:
@@ -64,7 +64,7 @@ sap_create_vm_networks: []
 #    name: multi-network-definition
 
 # Interfaces the VM has, see below for an example.
-# The OCPv cluster has to have the according NetworkAttachmentPolicies
+# The OCPv cluster has to have the according NetworkAttachmentDefinitions and NetworkPolicies
 sap_create_vm_interfaces: []
 
 #sap_create_vm_interfaces:
