@@ -1,5 +1,5 @@
 ---
-- name: "Download rhel 8.6 image"
+- name: "Download rhel {{ sap_create_vm_rhel_version }} image"
   kubernetes.core.k8s:
     state: present
     definition:
@@ -7,34 +7,13 @@
       kind: DataVolume
       metadata:
         namespace: openshift-virtualization-os-images
-        name: rhel-86
+        name: rhel-{{ sap_create_vm_rhel_version }}
         annotations:
           cdi.kubevirt.io/storage.bind.immediate.requested: 'true'
       spec:
         source:
           registry:
-            url: 'docker://registry.redhat.io/rhel8/rhel-guest-image:8.6.0'
-            pullMethod: node
-        storage:
-          resources:
-            requests:
-              storage: 10Gi
-
-- name: "Download rhel 8.8 image"
-  kubernetes.core.k8s:
-    state: present
-    definition:
-      apiVersion: cdi.kubevirt.io/v1beta1
-      kind: DataVolume
-      metadata:
-        namespace: openshift-virtualization-os-images
-        name: rhel-88
-        annotations:
-          cdi.kubevirt.io/storage.bind.immediate.requested: 'true'
-      spec:
-        source:
-          registry:
-            url: 'docker://registry.redhat.io/rhel8/rhel-guest-image:8.8.0'
+            url: "docker://registry.redhat.io/rhel8/rhel-guest-image:{{ sap_create_vm_rhel_version }}"
             pullMethod: node
         storage:
           resources:

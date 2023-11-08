@@ -28,8 +28,8 @@ sap_create_vm_sockets: 1
 # Should the RHEL OS image be downloaded from Red Hat
 sap_create_vm_download_rhel_images: true
 
-# Name of the disk image to be used as root disk
-sap_create_vm_rhel_image: rhel-88
+# Version of the RHEL disk image to be downloaded and used as root disk, e.g. 8.6.0, 8.8.0
+sap_create_vm_rhel_version: 9.0.0
 
 # This amount of memory [GB] is reserved on top of the VM memory for the container to give it some headroom, only change with caution.
 sap_create_vm_memory_overhead: 16 # [GB]
