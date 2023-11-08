@@ -115,51 +115,18 @@ spec:
             name: hana-log-disk
             cache: none
             io: native
-
-          interfaces:
-          - name: sapbridge-network-definition
-            bridge: {}
-            model: virtio
-            networkInterfaceMultiqueue: true
-          - name: storage-network-definition
-            sriov: {}
-          - name: multi-network-definition
-            sriov: {}
+          interfaces:  {{ sap_create_vm_interfaces }}
         resources:
           requests:
             memory: "{{ sap_create_vm_memory|int + sap_create_vm_memory_overhead|int }}Gi"
       evictionStrategy: LiveMigrate
       hostname: "{{ item }}"
-      networks:
-      - multus:
-          networkName: sapbridge-network-definition
-        name: sapbridge-network-definition
-      - multus:
-          networkName: iface-storage-sriov
-        name: storage-network-definition
-
-      - multus:
-          networkName: iface-multi-sriov
-        name: multi-network-definition
+      networks: {{ sap_create_vm_networks }}
       terminationGracePeriodSeconds: 180
       volumes:
-      {{sap_create_vm_cloud_init}}
-#      - cloudInitNoCloud:
-#          userData: |
-#            #cloud-config
-#            user: cloud-user
-#            password: "{{ sap_create_vm_cloud_user_passwd }}"
-#            chpasswd:
-#              expire: false
-#            ssh_authorized_keys:
-#              - "{{ sap_create_vm_ssh_key }}"
-#            hostname: "{{ item }}"
-#          network:
-#            version: 2
-#            ethernets:
-#              eth0:
-#                dhcp4: true
-#        name: cloudinitdisk
+      - cloudInitNoCloud:
+          {{ sap_create_vm_cloud_config }}
+        name: cloudinitdisk
       - dataVolume:
           name: "{{ item }}-rootdisk"
         name: rootdisk
