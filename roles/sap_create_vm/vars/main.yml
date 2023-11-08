@@ -12,7 +12,7 @@ sap_create_vm_memory: 32 # [GB]
 ######################################
 # The here defined virtual CPUs should be a subset of the physical CPUs.
 # Ideally, the guest (VM) would have a full NUMA node (typically socket) minus two cores.
-# E.g. a physical four socket host with 27 CPU cores (with 2 SMT threads) 
+# E.g. a physical four socket host with 27 CPU cores (with 2 SMT threads)
 # --> A guest with 25 CPU cores, 2 threads and 4 sockets. If the guest should be smaller, use less sockets.
 # This settings will greatly effect performance.
 #
