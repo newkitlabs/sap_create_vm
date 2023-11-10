@@ -98,13 +98,14 @@ Needs the ansible kubernetes module and the python3 kubernetes binding. On a RHE
 * ansible-collection-kubernetes-core
 
 ## Example Playbook
-
+```
 playbooks/sap-create-vm.yml
 ---
 - hosts: all
   gather_facts: true
   serial: 1
   vars:
+    sap_create_vm_cloud_user_passwd: MyS5perS3cureP@assW0rD
   tasks:
     - name: Include Role
       ansible.builtin.include_role:
