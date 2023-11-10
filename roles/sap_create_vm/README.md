@@ -13,51 +13,83 @@ An OCPv cluster that has been configured with the sap_hypervisor_node_preconfigu
 # Namespace the VMs are created in
 sap_create_vm_namespace: sap
 
-# Storage classe used XXX TBR?
-sap_create_vm_storage_class: nas
-
 # Amount of memory [GB] the VM will have
 sap_create_vm_memory: 32 # [GB]
 
+######################################
+# CPU Topology #######################
+######################################
+# The here defined virtual CPUs should be a subset of the physical CPUs.
+# Ideally, the guest (VM) would have a full NUMA node (typically socket) minus two cores.
+# E.g. a physical four socket host with 27 CPU cores (with 2 SMT threads)
+# --> A guest with 25 CPU cores, 2 threads and 4 sockets. If the guest should be smaller, use less sockets.
+# This settings will greatly effect performance.
+#
 # Number of CPU cores the VM will have
-sap_create_vm_cores: 26
+sap_create_vm_cores: 2
 
 # Number of CPU threads
 sap_create_vm_threads: 2
 
 # Number of CPU sockets to use
-sap_create_vm_sockets: 4
+sap_create_vm_sockets: 1
 
 # Should the RHEL OS image be downloaded from Red Hat
 sap_create_vm_download_rhel_images: true
 
-# Name of the disk image to be used as root disk 
-sap_create_vm_rhel_image: rhel-86
+# Version of the RHEL disk image to be downloaded and used as root disk, e.g. 8.6.0, 8.8.0
+sap_create_vm_rhel_version: 8.8.0
 
 # This amount of memory [GB] is reserved on top of the VM memory for the container to give it some headroom, only change with caution.
 sap_create_vm_memory_overhead: 16 # [GB]
 
-# Template to be used, should not be changed unless you know what you are doing
-sap_create_vm_template: vm-configuration.yaml.j2
+sap_create_vm_cloud_config:
+      userData: >+
+        #cloud-config
 
-sap_create_vm_cloud_init: 
-      - cloudInitNoCloud:
-          userData: |
-            #cloud-config
-            user: cloud-user
-            password: mySup3RS3cureP@assw0rD
-            chpasswd:
-              expire: false
-            ssh_authorized_keys:
-              - "<PUT SSH KEY HERE> or remove"
-            hostname: "{{ item }}"
-          network:
-            version: 2
-            ethernets:
-              eth0:
-                dhcp4: true
-        name: cloudinitdisk
+        user: cloud-user
 
+        password: {{ sap_create_vm_cloud_user_passwd }}
+
+        chpasswd:
+          expire: false
+
+        network:
+          version: 2
+          ethernets:
+            eth0:
+              dhcp4: true
+
+
+# Networks the VM is attached to, see below for an example
+# The OCPv cluster has to have the according NetworkAttachmentDefinitions and NetworkPolicies
+sap_create_vm_networks: []
+
+# sap_create_vm_networks:
+#  - multus:
+#      networkName: sapbridge-network-definition
+#    name: sapbridge-network-definition
+#  - multus:
+#      networkName: iface-storage-sriov
+#    name: storage-network-definition
+#  - multus:
+#      networkName: iface-multi-sriov
+#    name: multi-network-definition
+
+# Interfaces the VM has, see below for an example.
+# The OCPv cluster has to have the according NetworkAttachmentDefinitions and NetworkPolicies
+sap_create_vm_interfaces: []
+
+# sap_create_vm_interfaces:
+#  - name: sapbridge-network-definition
+#    bridge: {}
+#    model: virtio
+#    networkInterfaceMultiqueue: true
+#  - name: storage-network-definition
+#    sriov: {}
+#  - name: multi-network-definition
+#    sriov: {}
+```
 
 ## Dependencies
 
