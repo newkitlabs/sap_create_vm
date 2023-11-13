@@ -112,6 +112,11 @@ playbooks/sap-create-vm.yml
         name: sap_create_vm
 ```
 
+Then call the playbook with e.g.
+```
+ansible-playbook -vvv --connection=local -i localhost, playbooks/sap-create-vm.yml -e sap_create_vm_names="['sapvm01']" -e sap_create_vm_memory=24
+```
+
 ## License
 Apache 2.0
 
