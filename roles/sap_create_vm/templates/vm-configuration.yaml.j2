@@ -113,6 +113,9 @@ spec:
             name: hana-log-disk
             cache: none
             io: native
+          - disk:
+              bus: virtio
+            name: downwardmetrics
           interfaces:  {{ sap_create_vm_interfaces }}
         resources:
           requests:
@@ -137,3 +140,5 @@ spec:
       - dataVolume:
           name: "{{ item }}-hana-share-disk"
         name: hana-share-disk
+      - downwardMetrics: {}
+        name: downwardmetrics
